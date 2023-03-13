@@ -1,0 +1,37 @@
+get: 
+  tags: 
+    - Project
+  summary: List projects
+  description: ''
+  operationId: listProjets
+  responses:
+    '200': 
+      description: Succesful operation
+      content: 
+        application/json:
+          schema: 
+            type: array
+            items:
+              $ref: '../components/schemas/Project.yaml'
+post: 
+  tags: 
+    - Project
+  summary: Add project
+  description: ''
+  operationId: addProject
+  requestBody: 
+    description: Add a new project
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/Project.yaml'
+    required: true
+  responses:
+    '200': 
+      description: Succesful operation
+      content: 
+        application/json:
+          schema: 
+            $ref: '../components/schemas/Project.yaml'
+    '405':
+      description: Invalid project

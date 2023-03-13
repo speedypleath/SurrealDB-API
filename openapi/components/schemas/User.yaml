@@ -1,19 +1,17 @@
 type: object
 properties:
+  id:
+    type: integer
+    format: int64
+    example: 1
   username:
-    description: User supplied username
     type: string
-    minLength: 4
-    example: John78
-  firstName:
-    description: User first name
-    type: string
-    minLength: 1
-    example: John
-  lastName:
-    description: User last name
-    type: string
-    minLength: 1
-    example: Smith
+    example: j0hndoe
   email:
-    $ref: ./Email.yaml
+    type: string
+    format: email
+    example: johndoe@gmail.com
+  projects:
+    type: array
+    items: 
+      $ref: './Project'

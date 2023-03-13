@@ -1,0 +1,79 @@
+post: 
+  tags: 
+    - User
+  summary: Add project to user
+  description: ''
+  operationId: addProjectToUser
+  parameters:
+    - name: username
+      in: path
+      required: true
+      description: Username of user for which to assign project
+      schema: 
+        type: string
+  requestBody: 
+    description: Assign a new project to user
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/User.yaml'
+    required: true
+  responses:
+    '200': 
+      description: Succesful operation
+      content: 
+        application/json:
+          schema: 
+            $ref: '../components/schemas/User.yaml'
+    '405':
+      description: Invalid user
+get:
+  tags: 
+    - User
+  summary: Get list of projects for user
+  operationId: getProjectsForUser
+  parameters:
+    - name: username
+      in: path
+      required: true
+      description: Username of user to return
+      schema: 
+        type: string
+  responses:
+    '200': 
+      description: Succesful operation
+      content: 
+        application/json:
+          schema: 
+            type: array
+            items:
+              $ref: '../components/schemas/User.yaml'
+    '400':
+      description: Invalid username supplied
+    '404':
+      description: User not found
+delete:
+  tags:
+    - User
+  summary: Remove project from user
+  description: ''
+  operationId: deleteProjectFromUser
+  parameters:
+    - name: username
+      in: path
+      description: The username of the user for which to remove project
+      required: true
+      schema:
+        type: string
+  requestBody: 
+    description: Remove project from user
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/Project.yaml/properties/id'
+    required: true
+  responses:
+    '400':
+      description: Invalid username supplied
+    '404':
+      description: User not found

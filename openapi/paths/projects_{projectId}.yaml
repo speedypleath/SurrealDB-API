@@ -1,0 +1,63 @@
+get:
+  tags: 
+    - Project
+  summary: Get project
+  operationId: getProject
+  parameters:
+    - name: projectId
+      in: path
+      required: true
+      description: Id of project to return
+      schema: 
+        type: number
+  responses:
+    '200': 
+      description: Succesful operation
+      content: 
+        application/json:
+          schema: 
+            $ref: '../components/schemas/Project.yaml'
+    '400':
+      description: Invalid id supplied
+    '404':
+      description: Project not found
+put:
+  tags:
+    - Project
+  summary: Update project
+  description: ''
+  operationId: updateProject
+  parameters:
+    - name: projectId
+      in: path
+      description: The id of the project that needs to be updated
+      required: true
+      schema:
+        type: number
+  requestBody:
+    description: Update an existent project
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/Project.yaml'
+  responses:
+    default:
+      description: successful operation
+delete:
+  tags:
+    - Project
+  summary: Delete project
+  description: ''
+  operationId: deleteProject
+  parameters:
+    - name: projectId
+      in: path
+      description: The id of the project that needs to be deleted
+      required: true
+      schema:
+        type: number
+  responses:
+    '400':
+      description: Invalid project id supplied
+    '404':
+      description: Project not found
