@@ -12,7 +12,7 @@ get:
           schema: 
             type: array
             items:
-              $ref: '#/components/schemas/User'
+              $ref: '../components/schemas/User.yaml'
 post: 
   tags: 
     - User
@@ -24,7 +24,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '#/components/schemas/User'
+          $ref: '../components/schemas/User.yaml'
     required: true
   responses:
     '200': 
@@ -32,6 +32,6 @@ post:
       content: 
         application/json:
           schema: 
-            $ref: '#/components/schemas/User'
+            $ref: '../components/schemas/User.yaml'
     '405':
       description: Invalid user`
