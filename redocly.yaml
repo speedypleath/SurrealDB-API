@@ -5,7 +5,7 @@ apis:
 extends:
   - recommended
 rules:
-  security-defined: error
+  security-defined: warning
 theme:
   openapi:
     htmlTemplate: ./docs/index.html

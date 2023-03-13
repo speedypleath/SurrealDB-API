@@ -70,7 +70,7 @@ delete:
     content:
       application/json:
         schema:
-          $ref: '../components/schemas/Project.yaml/properties/id'
+          type: number
     required: true
   responses:
     '400':

@@ -14,4 +14,4 @@ properties:
   projects:
     type: array
     items: 
-      $ref: './Project'
+      $ref: './Project.yaml'
