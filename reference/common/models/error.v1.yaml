@@ -1,0 +1,13 @@
+title: Error
+x-stoplight:
+  id: 01fnb5xnc4igo
+type: object
+description: |
+  A standar error object
+properties:
+  code:
+    type: string
+  message:
+    type: string
+required:
+  - code

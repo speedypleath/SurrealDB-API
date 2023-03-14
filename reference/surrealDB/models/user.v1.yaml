@@ -1,0 +1,30 @@
+title: User
+x-stoplight:
+  id: c2rjfp3d3ggnw
+type: object
+x-tags:
+  - User
+properties:
+  id:
+    type: integer
+    format: int64
+    exclusiveMinimum: 0
+  username:
+    type: string
+  email:
+    type: string
+    format: email
+  projects:
+    type: array
+    items:
+      $ref: ./project.v1.yaml
+required:
+  - id
+  - username
+examples:
+  - id: 1
+    username: j0hndoe
+    email: johndoe@example.com
+    projects:
+      - id: 1
+        name: New project

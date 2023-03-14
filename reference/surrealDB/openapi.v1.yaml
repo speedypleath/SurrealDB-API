@@ -1,0 +1,389 @@
+openapi: 3.1.0
+x-stoplight:
+  id: u2sk5u0imhbnt
+info:
+  title: SurrealDB Client
+  version: 1.0.0
+  description: Basic client for SurrealDB.
+  contact:
+    name: speedypleath
+    email: gheorgheandrei13@gmail.com
+    url: 'https://github.com/speedypleath'
+  license:
+    name: MIT
+    url: 'https://opensource.org/license/mit/'
+  termsOfService: 'https://github.com/speedypleath'
+servers:
+  - url: 'http://localhost:3000'
+tags:
+  - name: User
+  - name: Project
+paths:
+  /users:
+    post:
+      tags:
+        - User
+      summary: Create New User
+      operationId: post-user
+      responses:
+        '200':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                $ref: ./models/user.v1.yaml
+              examples:
+                New User Bob Fellow:
+                  value:
+                    id: 12
+                    username: j0hndoe
+                    email: bob.fellow@gmail.com
+        '400':
+          description: Missing Required Information
+        '409':
+          description: Email Already Taken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+              required:
+                - username
+            examples:
+              Generate user j0hndoe:
+                value:
+                  username: j0hndoe
+                  email: johndoe@gmail.com
+        description: Post the necessary fields for the API to create a new user.
+      description: Create a new user.
+    parameters: []
+    get:
+      tags:
+        - User
+      summary: Get users
+      operationId: get-users
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  '':
+                    type: array
+                    items:
+                      $ref: ./models/user.v1.yaml
+              examples:
+                List users:
+                  value:
+                    '':
+                      - id: 1
+                        username: user
+                        email: user@example.com
+                        projects:
+                          - id: 1
+                            name: New project
+      description: List all users.
+  '/users/{username}':
+    parameters:
+      - schema:
+          type: string
+        name: username
+        in: path
+        required: true
+    get:
+      summary: Get User info by username
+      tags:
+        - User
+      responses:
+        '200':
+          description: User Found
+          content:
+            application/json:
+              schema:
+                $ref: ./models/user.v1.yaml
+              examples:
+                Get User Alice Smith:
+                  value:
+                    id: 142
+                    username: j0hndoe
+                    email: alice.smith@gmail.com
+        '404':
+          description: User Not Found
+      operationId: get-users-userId
+      description: Retrieve the information of the user with the matching username.
+    patch:
+      tags:
+        - User
+      summary: Update User Information
+      operationId: patch-users-userId
+      responses:
+        '200':
+          description: User Updated
+          content:
+            application/json:
+              schema:
+                $ref: ./models/user.v1.yaml
+              examples:
+                Updated User Rebecca Baker:
+                  value:
+                    id: 13
+                    username: j0hndoe
+                    email: rebecca@gmail.com
+        '404':
+          description: User Not Found
+        '409':
+          description: Email Already Taken
+      description: Update the information of an existing user.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                email:
+                  type: string
+                  description: 'If a new email is given, the user''s email verified property will be set to false.'
+                dateOfBirth:
+                  type: string
+            examples:
+              Update First Name:
+                value:
+                  firstName: Rebecca
+              Update Email:
+                value:
+                  email: rebecca@gmail.com
+              Update Last Name & Date of Birth:
+                value:
+                  lastName: Baker
+                  dateOfBirth: '1985-10-02'
+        description: Patch user properties to update.
+    delete:
+      tags:
+        - User
+      summary: Delete User with username
+      operationId: delete-users-userId
+      responses:
+        '200':
+          description: OK
+      description: Delete User with matching username.
+  '/users/{username}/projects':
+    parameters:
+      - schema:
+          type: string
+        name: username
+        in: path
+        required: true
+    get:
+      summary: Get projects for user
+      tags:
+        - User
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  projects:
+                    type: array
+                    items:
+                      $ref: ./models/project.v1.yaml
+                required:
+                  - projects
+      operationId: get-users-username-projects
+      description: Get list of projects for User with given username.
+    post:
+      summary: Assign project to user
+      tags:
+        - User
+      operationId: post-users-username-projects
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  projects:
+                    type: array
+                    items:
+                      $ref: ./models/project.v1.yaml
+      description: Assign project to User with given username.
+  '/users/{username}/projects/{projectId}':
+    parameters:
+      - schema:
+          type: string
+        name: username
+        in: path
+        required: true
+      - schema:
+          type: number
+        name: projectId
+        in: path
+        required: true
+    get:
+      summary: Check user work on project
+      tags:
+        - User
+      operationId: check-users-username-projects-projectId
+      responses:
+        '200':
+          description: OK
+      description: Check if project is assigned to user.
+    delete:
+      summary: Remove project from user
+      tags:
+        - User
+      operationId: delete-users-username-projects-projectId
+      responses:
+        '200':
+          description: OK
+      description: Remove project from user with given username.
+  /projects:
+    get:
+      summary: List project
+      tags:
+        - Project
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  projects:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Project'
+                required:
+                  - projects
+      operationId: get-projects
+      description: List all projects.
+    post:
+      summary: Add project
+      tags:
+        - Project
+      responses:
+        '200':
+          description: OK
+      operationId: post-projects
+      description: Add new project.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+                - name
+  '/projects/{projectId}':
+    parameters:
+      - schema:
+          type: integer
+        name: projectId
+        in: path
+        required: true
+    get:
+      summary: Get project
+      tags:
+        - Project
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  project:
+                    $ref: '#/components/schemas/Project'
+                required:
+                  - project
+      operationId: get-projects-projectId
+      description: Get project with given id.
+    put:
+      summary: Edit project
+      tags:
+        - Project
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  project:
+                    $ref: '#/components/schemas/Project'
+      operationId: put-projects-projectId
+      description: Edit project with given id.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+                - name
+    delete:
+      summary: Delete project
+      tags:
+        - Project
+      responses:
+        '200':
+          description: OK
+      operationId: delete-projects-projectId
+      description: Delete project with given id.
+  '/projects/{projectId}/users':
+    parameters:
+      - schema:
+          type: integer
+        name: projectId
+        in: path
+        required: true
+    get:
+      summary: Get users working on project
+      tags:
+        - Project
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+                required:
+                  - users
+      operationId: get-projects-projectId-users
+      description: Get all users working on project with given id.
+components:
+  schemas:
+    User:
+      $ref: ./models/user.v1.yaml
+    Project:
+      $ref: ./models/project.v1.yaml

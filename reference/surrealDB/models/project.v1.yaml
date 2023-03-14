@@ -1,0 +1,19 @@
+title: Project
+x-stoplight:
+  id: xkz2uyooftuq8
+type: object
+x-tags:
+  - Project
+properties:
+  id:
+    type: integer
+    format: int64
+    exclusiveMinimum: 0
+  name:
+    type: string
+required:
+  - id
+  - name
+examples:
+  - id: 1
+    name: New project

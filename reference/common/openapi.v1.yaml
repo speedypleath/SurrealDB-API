@@ -1,0 +1,46 @@
+parameters:
+  skip:
+    in: query
+    type: string
+    name: skip
+  rate-limit:
+    name: Rate-Limit
+    in: header
+    type: string
+  limit:
+    name: limit
+    in: query
+    type: string
+responses:
+  '401':
+    description: Request was not authorized.
+    schema:
+      '$ref': './models/error.v1.yaml'
+    examples:
+      application/json:
+        code: '401'
+        message: Not Authorized
+  '403':
+    description: Forbbiden access.
+    schema:
+      '$ref': './models/error.v1.yaml'
+    examples:
+      application/json:
+        code: '403'
+        message: Forbbiden
+  '404':
+    description: Resource not found.
+    schema:
+      '$ref': './models/error.v1.yaml'
+    examples:
+      application/json:
+        code: '404'
+        message: Not Found
+  '500':
+    description: Internal server error.
+    schema:
+      '$ref': './models/error.v1.yaml'
+    examples:
+      application/json:
+        code: '500'
+        message: Server Error
