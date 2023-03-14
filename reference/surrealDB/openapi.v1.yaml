@@ -255,7 +255,7 @@ paths:
       description: Remove project from user with given username.
   /projects:
     get:
-      summary: List project
+      summary: List projects
       tags:
         - Project
       responses:
